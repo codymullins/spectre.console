@@ -5,12 +5,22 @@ namespace Spectre.Console.Cli;
 /// </summary>
 public interface ITypeRegistrar
 {
+#if NETSTANDARD2_0
     /// <summary>
     /// Registers the specified service.
     /// </summary>
     /// <param name="service">The service.</param>
     /// <param name="implementation">The implementation.</param>
     void Register(Type service, Type implementation);
+
+#else
+    /// <summary>
+    /// Registers the specified service.
+    /// </summary>
+    /// <param name="service">The service.</param>
+    /// <param name="implementation">The implementation.</param>
+    void Register(Type service, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type implementation);
+#endif
 
     /// <summary>
     /// Registers the specified instance.
